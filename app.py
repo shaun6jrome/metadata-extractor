@@ -79,7 +79,7 @@ def main():
             st.info(f"**File Size:** {size_str}")
 
         st.markdown("---")
-        st.markdown("## Extracted EXIF Metadata")
+        st.markdown("## Extracted EXIF Metadata Dashboard")
         
         # Extract Metadata
         from utils.exif_extractor import extract_exif_data
@@ -88,9 +88,48 @@ def main():
             raw_metadata, parsed_data = extract_exif_data(uploaded_file)
             
         if parsed_data:
-            st.markdown("### Parsed Data")
-            for key, value in parsed_data.items():
-                st.write(f"**{key}:** {value}")
+            # Create Tabs for Dashboard
+            tab1, tab2, tab3, tab4, tab5 = st.tabs([
+                "📁 File Info", 
+                "📷 Camera Info", 
+                "⏱ Date & Time", 
+                "⚙️ Technical Settings",
+                "📍 GPS Info"
+            ])
+            
+            with tab1:
+                st.markdown("### File Information")
+                st.write(f"**Image Format:** {parsed_data.get('Image Format', 'N/A')}")
+                st.write(f"**Image Mode:** {parsed_data.get('Image Mode', 'N/A')}")
+                st.write(f"**Image Dimensions:** {parsed_data.get('Image Dimensions', 'N/A')}")
+                
+            with tab2:
+                st.markdown("### Camera Information")
+                st.write(f"**Camera Manufacturer:** {parsed_data.get('Camera Manufacturer', 'N/A')}")
+                st.write(f"**Camera Model:** {parsed_data.get('Camera Model', 'N/A')}")
+                st.write(f"**Software:** {parsed_data.get('Software', 'N/A')}")
+                
+            with tab3:
+                st.markdown("### Date & Time Information")
+                st.write(f"**Date Taken:** {parsed_data.get('Date Taken', 'N/A')}")
+                st.write(f"**Date Modified:** {parsed_data.get('Date Modified', 'N/A')}")
+                
+            with tab4:
+                st.markdown("### Technical Camera Settings")
+                st.write(f"**ISO Value:** {parsed_data.get('ISO Value', 'N/A')}")
+                st.write(f"**Exposure Time:** {parsed_data.get('Exposure Time', 'N/A')}")
+                st.write(f"**Aperture:** {parsed_data.get('Aperture', 'N/A')}")
+                st.write(f"**Focal Length:** {parsed_data.get('Focal Length', 'N/A')}")
+                st.write(f"**Flash Information:** {parsed_data.get('Flash Information', 'N/A')}")
+                
+            with tab5:
+                st.markdown("### GPS Information")
+                if parsed_data.get("GPS Data Present") == "Yes":
+                    st.success("GPS metadata found.")
+                    st.info("Detailed GPS extraction will be displayed here in Phase 5.")
+                else:
+                    st.warning("No GPS metadata found.")
+                    
         else:
             st.warning("No standard metadata found.")
             
