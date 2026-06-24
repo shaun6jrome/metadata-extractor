@@ -77,6 +77,29 @@ def main():
             st.info(f"**File Name:** {uploaded_file.name}")
             st.info(f"**File Type:** {uploaded_file.type}")
             st.info(f"**File Size:** {size_str}")
+
+        st.markdown("---")
+        st.markdown("## Extracted EXIF Metadata")
+        
+        # Extract Metadata
+        from utils.exif_extractor import extract_exif_data
+        
+        with st.spinner('Extracting metadata...'):
+            raw_metadata, parsed_data = extract_exif_data(uploaded_file)
+            
+        if parsed_data:
+            st.markdown("### Parsed Data")
+            for key, value in parsed_data.items():
+                st.write(f"**{key}:** {value}")
+        else:
+            st.warning("No standard metadata found.")
+            
+        with st.expander("View Raw Metadata"):
+            if raw_metadata:
+                st.json(raw_metadata)
+            else:
+                st.write("No raw metadata could be extracted.")
+
     else:
         st.info("Welcome to the Metadata Extractor. Please proceed to upload an image.")
 
