@@ -48,7 +48,37 @@ def main():
 
     # Main Content Area
     st.write("---")
-    st.write("Welcome to the Metadata Extractor. Please proceed to upload an image.")
+    
+    # Image Upload Section
+    uploaded_file = st.file_uploader("Upload an image for analysis", type=["jpg", "jpeg", "png", "tiff"])
+    
+    if uploaded_file is not None:
+        st.success("Image uploaded successfully!")
+        
+        # Display image preview and basic info in columns
+        col1, col2 = st.columns([1, 2])
+        
+        with col1:
+            st.markdown("### Image Preview")
+            st.image(uploaded_file, use_container_width=True)
+            
+        with col2:
+            st.markdown("### Basic File Information")
+            # Calculate file size
+            file_size_bytes = uploaded_file.size
+            file_size_kb = file_size_bytes / 1024
+            file_size_mb = file_size_kb / 1024
+            
+            if file_size_mb >= 1:
+                size_str = f"{file_size_mb:.2f} MB"
+            else:
+                size_str = f"{file_size_kb:.2f} KB"
+                
+            st.info(f"**File Name:** {uploaded_file.name}")
+            st.info(f"**File Type:** {uploaded_file.type}")
+            st.info(f"**File Size:** {size_str}")
+    else:
+        st.info("Welcome to the Metadata Extractor. Please proceed to upload an image.")
 
 if __name__ == "__main__":
     main()
