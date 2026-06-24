@@ -135,6 +135,30 @@ def main():
                 else:
                     st.info("No GPS metadata found in this image.")
                     
+            # Risk Analysis System
+            st.markdown("---")
+            st.markdown("## Privacy Risk Analysis")
+            
+            from utils.risk_analyzer import analyze_metadata_risk, generate_forensics_summary
+            
+            risk_level, risks = analyze_metadata_risk(parsed_data, gps_info)
+            summary = generate_forensics_summary(parsed_data, gps_info)
+            
+            # Risk Level Badge
+            if risk_level == "High Risk":
+                st.error(f"**Overall Risk Level:** {risk_level}")
+            elif risk_level == "Medium Risk":
+                st.warning(f"**Overall Risk Level:** {risk_level}")
+            else:
+                st.success(f"**Overall Risk Level:** {risk_level}")
+                
+            st.markdown("### Forensics Summary")
+            st.info(summary)
+            
+            st.markdown("### Detected Risks")
+            for risk in risks:
+                st.write(risk)
+                
         else:
             st.warning("No standard metadata found.")
             
