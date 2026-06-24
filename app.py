@@ -130,6 +130,21 @@ def main():
                     st.success("GPS metadata found and converted.")
                     st.write(f"**Latitude:** {gps_info['Latitude']:.6f}")
                     st.write(f"**Longitude:** {gps_info['Longitude']:.6f}")
+                    
+                    # Map Visualization
+                    import folium
+                    from streamlit_folium import st_folium
+                    
+                    st.markdown("#### Location Map")
+                    m = folium.Map(location=[gps_info['Latitude'], gps_info['Longitude']], zoom_start=15)
+                    folium.Marker(
+                        [gps_info['Latitude'], gps_info['Longitude']], 
+                        popup="Extracted Location",
+                        icon=folium.Icon(color="red", icon="info-sign")
+                    ).add_to(m)
+                    
+                    st_folium(m, width=700, height=500)
+                    
                 elif parsed_data.get("GPS Data Present") == "Yes":
                     st.warning("GPS tags exist, but could not be parsed into coordinates.")
                 else:
