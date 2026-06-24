@@ -4,7 +4,6 @@ def main():
     # Set page configuration
     st.set_page_config(
         page_title="Metadata Extractor | Digital Forensics",
-        page_icon="🔍",
         layout="wide",
         initial_sidebar_state="expanded"
     )
@@ -35,13 +34,13 @@ def main():
     """, unsafe_allow_html=True)
 
     # App Header
-    st.title("🔍 Metadata Extractor (EXIF Analyzer)")
+    st.title("Metadata Extractor (EXIF Analyzer)")
     st.markdown("### Digital Forensics Image Analysis Tool")
     st.markdown("Upload an image to extract and analyze hidden metadata, GPS coordinates, and camera settings.")
 
     # Sidebar
     with st.sidebar:
-        st.header("⚙️ Settings & Info")
+        st.header("Settings & Info")
         st.info("This tool extracts EXIF data from images for digital forensic analysis.")
         st.markdown("---")
         st.markdown("**Supported Formats:** JPG, JPEG, PNG, TIFF")
@@ -91,11 +90,11 @@ def main():
             if parsed_data and "Extraction Error" not in parsed_data:
                 # Create Tabs for Dashboard
                 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-                    "📁 File Info", 
-                    "📷 Camera Info", 
-                    "⏱ Date & Time", 
-                    "⚙️ Technical Settings",
-                    "📍 GPS Info"
+                    "File Info", 
+                    "Camera Info", 
+                    "Date & Time", 
+                    "Technical Settings",
+                    "GPS Info"
                 ])
                 
                 with tab1:
@@ -185,14 +184,14 @@ def main():
                 col_exp1, col_exp2 = st.columns(2)
                 with col_exp1:
                     st.download_button(
-                        label="📥 Download JSON Report",
+                        label="Download JSON Report",
                         data=json_report,
                         file_name="metadata_report.json",
                         mime="application/json"
                     )
                 with col_exp2:
                     st.download_button(
-                        label="📥 Download TXT Report",
+                        label="Download TXT Report",
                         data=txt_report,
                         file_name="metadata_report.txt",
                         mime="text/plain"

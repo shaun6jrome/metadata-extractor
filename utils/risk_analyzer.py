@@ -9,26 +9,26 @@ def analyze_metadata_risk(parsed_data, gps_info):
     # Check for High Risk: GPS Data
     if gps_info or parsed_data.get("GPS Data Present") == "Yes":
         risk_level = "High Risk"
-        risks.append("🔴 HIGH: GPS coordinates are embedded in the image. This reveals the exact location where the photo was taken.")
+        risks.append("HIGH: GPS coordinates are embedded in the image. This reveals the exact location where the photo was taken.")
         
     # Check for Medium Risk: Camera Information
     if parsed_data.get("Camera Model") not in ["Unknown", "N/A"]:
         if risk_level == "Low Risk":
             risk_level = "Medium Risk"
-        risks.append("🟠 MEDIUM: Camera device information is exposed. This can be used to profile the device used.")
+        risks.append("MEDIUM: Camera device information is exposed. This can be used to profile the device used.")
         
     # Check for Medium Risk: Original Timestamp
     if parsed_data.get("Date Taken") not in ["Unknown", "N/A"]:
         if risk_level == "Low Risk":
             risk_level = "Medium Risk"
-        risks.append("🟠 MEDIUM: Original creation timestamp is available. This reveals exactly when the photo was taken.")
+        risks.append("MEDIUM: Original creation timestamp is available. This reveals exactly when the photo was taken.")
         
     # Check for Low Risk: Software/Processing
     if parsed_data.get("Software") not in ["Unknown", "N/A"]:
-        risks.append("🟢 LOW: Software processing information is visible.")
+        risks.append("LOW: Software processing information is visible.")
         
     if not risks:
-        risks.append("🟢 LOW: No significant privacy risks detected. Minimal metadata found.")
+        risks.append("LOW: No significant privacy risks detected. Minimal metadata found.")
         
     return risk_level, risks
 
