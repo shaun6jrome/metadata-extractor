@@ -159,8 +159,34 @@ def main():
             for risk in risks:
                 st.write(risk)
                 
+            # Export Functionality
+            st.markdown("---")
+            st.markdown("## Export Reports")
+            
+            from utils.report_generator import generate_json_report, generate_txt_report
+            
+            json_report = generate_json_report(parsed_data, gps_info, risk_level, risks)
+            txt_report = generate_txt_report(parsed_data, gps_info, risk_level, risks)
+            
+            col_exp1, col_exp2 = st.columns(2)
+            with col_exp1:
+                st.download_button(
+                    label="📥 Download JSON Report",
+                    data=json_report,
+                    file_name="metadata_report.json",
+                    mime="application/json"
+                )
+            with col_exp2:
+                st.download_button(
+                    label="📥 Download TXT Report",
+                    data=txt_report,
+                    file_name="metadata_report.txt",
+                    mime="text/plain"
+                )
+                
         else:
             st.warning("No standard metadata found.")
+
             
         with st.expander("View Raw Metadata"):
             if raw_metadata:
