@@ -83,9 +83,11 @@ def main():
         
         # Extract Metadata
         from utils.exif_extractor import extract_exif_data
+        from utils.gps_converter import extract_gps_data
         
         with st.spinner('Extracting metadata...'):
-            raw_metadata, parsed_data = extract_exif_data(uploaded_file)
+            raw_metadata, parsed_data, original_tags = extract_exif_data(uploaded_file)
+            gps_info = extract_gps_data(original_tags)
             
         if parsed_data:
             # Create Tabs for Dashboard
@@ -124,11 +126,14 @@ def main():
                 
             with tab5:
                 st.markdown("### GPS Information")
-                if parsed_data.get("GPS Data Present") == "Yes":
-                    st.success("GPS metadata found.")
-                    st.info("Detailed GPS extraction will be displayed here in Phase 5.")
+                if gps_info:
+                    st.success("GPS metadata found and converted.")
+                    st.write(f"**Latitude:** {gps_info['Latitude']:.6f}")
+                    st.write(f"**Longitude:** {gps_info['Longitude']:.6f}")
+                elif parsed_data.get("GPS Data Present") == "Yes":
+                    st.warning("GPS tags exist, but could not be parsed into coordinates.")
                 else:
-                    st.warning("No GPS metadata found.")
+                    st.info("No GPS metadata found in this image.")
                     
         else:
             st.warning("No standard metadata found.")

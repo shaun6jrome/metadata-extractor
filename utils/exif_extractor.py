@@ -52,5 +52,6 @@ def extract_exif_data(file_bytes):
 
     except Exception as e:
         parsed_data["Extraction Error"] = f"Failed to extract metadata: {str(e)}"
+        tags = {}
 
-    return metadata, parsed_data
+    return metadata, parsed_data, tags
