@@ -1,79 +1,108 @@
-# 🔍 Metadata Extractor (EXIF Analyzer)
+# Metadata Extractor (EXIF Analyzer)
 
-A complete digital forensics tool built with Python and Streamlit to extract, analyze, and display metadata from image files. This tool is designed for cybersecurity students, digital forensic investigators, photographers, and security researchers.
+![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
+![Streamlit](https://img.shields.io/badge/Streamlit-Framework-FF4B4B.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
-## 🚀 Features
+**Live Demo:** [Metadata Extractor on Streamlit Community Cloud](https://metadata-extractor-iegf4ode5zcnplnssmf87k.streamlit.app/)
 
-- **Image Upload & Preview**: Drag and drop support for JPG, JPEG, PNG, and TIFF images.
-- **EXIF Extraction Engine**: Automatically extracts embedded metadata such as Camera Manufacturer, Model, Lens Info, Date Taken, ISO, Exposure Time, and Aperture.
-- **Interactive Metadata Dashboard**: Clean, organized tabs separating File Info, Camera Info, Date & Time, and Technical Settings.
-- **GPS Metadata Analysis & Visualization**: Automatically converts raw GPS data into decimal degrees and plots the exact location on an interactive Folium map.
-- **Privacy Risk Assessment**: Analyzes the extracted metadata to determine the privacy risk level (Low, Medium, High) based on exposed GPS coordinates, timestamps, and device identifiers.
-- **Export Capabilities**: Generate and download detailed forensic reports in both JSON and TXT formats.
-- **Robust Error Handling**: Gracefully handles images without EXIF data or corrupted files.
+A comprehensive digital forensics tool built with Python and Streamlit to extract, analyze, and display embedded metadata from image files. Designed with a professional dark mode interface, this application is ideal for cybersecurity students, digital forensic investigators, photographers, and security researchers seeking to understand data exposure and privacy risks.
+
+---
+
+## 📖 Overview
+
+In the digital forensics landscape, every image carries a digital fingerprint known as EXIF (Exchangeable Image File Format) data. This tool automates the extraction and parsing of these hidden artifacts. It safely processes images entirely in-memory and provides users with an intuitive dashboard breaking down technical camera settings, geographical locations, and potential privacy risks.
+
+This project was developed as a comprehensive exercise in **Data Parsing, Geospatial Visualization, and Risk Analysis**, making it an excellent demonstration of full-stack Python capabilities for cybersecurity and data-driven applications.
+
+---
+
+## 🚀 Key Features
+
+*   **Robust EXIF Extraction Engine**: Leverages both `ExifRead` and `Pillow` to reliably parse embedded metadata, including Camera Manufacturer, Model, Lens Info, Date Taken, ISO, Exposure Time, and Aperture.
+*   **Geospatial Visualization**: Automatically detects raw GPS ratios from EXIF data, converts them into standard decimal degrees, and visually plots the exact geographical location on an interactive `Folium` map.
+*   **Automated Privacy Risk Assessment**: Implements a logical rule engine to evaluate the sensitivity of extracted metadata. It generates a **Low, Medium, or High Risk** score based on exposed GPS coordinates, exact timestamps, and specific device identifiers.
+*   **Forensics Dashboard Interface**: A modern, clean, and responsive Streamlit UI organized into logical tabs (`File Info`, `Camera Info`, `Date & Time`, `Technical Settings`, `GPS Info`).
+*   **Export Capabilities**: Allows forensic investigators to generate and download detailed, structured reports in both `JSON` and `TXT` formats.
+*   **Graceful Error Handling**: Built-in exception handling to manage corrupted files, unsupported formats, or images stripped of metadata gracefully without application crashes.
+
+---
 
 ## 🛠 Technology Stack
 
-- **Frontend**: Streamlit
-- **Backend**: Python 3
-- **Libraries**: 
-  - `Pillow` (Image Processing)
-  - `ExifRead` (Robust EXIF parsing)
-  - `pandas` (Data handling)
-  - `folium` & `streamlit-folium` (Map Visualization)
+*   **Frontend**: [Streamlit](https://streamlit.io/)
+*   **Backend**: Python 3
+*   **Image Processing & EXIF**: `Pillow`, `ExifRead`
+*   **Data Handling**: `pandas`
+*   **Map Visualization**: `folium`, `streamlit-folium`
 
-## 📦 Installation Guide
+---
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/shaun6jrome/metadata-extractor.git
-   cd metadata-extractor
-   ```
+## 📦 Installation & Setup (Local Development)
 
-2. **Create a virtual environment (Recommended):**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows use: venv\Scripts\activate
-   ```
+To run this tool locally on your machine, follow these steps:
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/shaun6jrome/metadata-extractor.git
+    cd metadata-extractor
+    ```
 
-4. **Run the application:**
-   ```bash
-   streamlit run app.py
-   ```
+2.  **Create a virtual environment (Recommended):**
+    ```bash
+    python -m venv venv
+    
+    # On macOS/Linux:
+    source venv/bin/activate  
+    
+    # On Windows:
+    venv\Scripts\activate
+    ```
 
-## 🖥 Usage
+3.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-1. Open the application in your web browser (typically `http://localhost:8501`).
-2. Use the file uploader to drag and drop an image (JPG, JPEG, PNG, or TIFF).
-3. Wait for the extraction engine to process the image.
-4. Navigate through the dashboard tabs to inspect the extracted data.
-5. If GPS coordinates are present, view the location on the interactive map.
-6. Review the **Privacy Risk Analysis** section to understand the potential exposure of the image.
-7. Click the download buttons to export the findings in JSON or TXT format.
+4.  **Launch the application:**
+    ```bash
+    streamlit run app.py
+    ```
 
-## 📂 Project Structure
+---
+
+## 🖥 Usage Guide
+
+1.  **Upload**: Navigate to the live demo or your local server (`http://localhost:8501`) and drag-and-drop an image (`JPG`, `JPEG`, `PNG`, or `TIFF`).
+2.  **Analyze**: The extraction engine will instantly parse the file and populate the dashboard.
+3.  **Investigate**: Click through the detailed tabs to inspect the exact camera settings and file properties.
+4.  **Visualize**: If the image contains location data, view the pinpointed location in the `GPS Info` tab.
+5.  **Assess Risk**: Review the `Privacy Risk Analysis` section to understand what sensitive data the image leaks.
+6.  **Export**: Click the download buttons to save your forensic report locally.
+
+---
+
+## 📂 Architecture & Project Structure
+
+The project follows a clean, modular architecture separating the user interface from the core analytical logic:
 
 ```text
 metadata-extractor/
 │
-├── app.py                     # Main Streamlit application
-├── requirements.txt           # Python dependencies
+├── app.py                     # Main Streamlit application and UI routing
+├── requirements.txt           # Python dependency manifests
 ├── README.md                  # Project documentation
 │
-├── utils/                     # Utility modules
-│   ├── exif_extractor.py      # EXIF parsing logic
-│   ├── gps_converter.py       # GPS coordinate conversion
-│   ├── risk_analyzer.py       # Privacy risk scoring logic
-│   └── report_generator.py    # JSON and TXT export logic
-│
-├── exports/                   # Directory for saved exports (if needed locally)
-└── assets/                    # Directory for static assets
+├── utils/                     # Core analytical modules
+│   ├── exif_extractor.py      # Logic for parsing and sanitizing EXIF tags
+│   ├── gps_converter.py       # Math functions for converting GPS ratios to decimals
+│   ├── risk_analyzer.py       # Rule-based engine for privacy risk scoring
+│   └── report_generator.py    # Formatting logic for JSON and TXT exports
 ```
 
+---
+
 ## 🔒 Security & Privacy Notice
-This tool runs entirely locally. Uploaded images are processed in-memory and are not saved or transmitted to any external servers, ensuring complete privacy during analysis.
+**Data Privacy:** This application is designed with security in mind. All image processing and metadata extraction occurs entirely in-memory during the runtime session. Uploaded files are **never** saved to disk or transmitted to any external servers or databases. What happens on your machine, stays on your machine.
